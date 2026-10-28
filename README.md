@@ -11,7 +11,7 @@ python -m pytest -q
 python -m uvicorn app:app --reload
 ```
 
-Use Python 3.12+ or Node 22+ with pnpm, as applicable. Create and activate a virtual environment for Python dependencies.
+Requires Python 3.12+. Create and activate a virtual environment before installing requirements.
 
 ## Features
 
@@ -23,10 +23,10 @@ Single tenant demo, no production auth, migration framework, managed TLS, rate l
 
 ## Tests
 
-Tests live alongside the source and cover business rules and error cases. See the portfolio delivery report for the actual validation results.
+Ten API tests cover authentication, product creation, duplicate SKUs, validation, search, pagination, missing records, stock movements and fail-closed writes. Run the test command above to verify your environment.
 
-## Explain this project
+## Design notes
 
-Trace one input through validation, state change, and output. Explain the data representation and one failure path. Modify a validation rule and update its test before discussing the project in an interview.
+Each database operation uses a short-lived SQLite connection. Stock adjustments use BEGIN IMMEDIATE so the availability check and update run in one transaction. A rejected adjustment leaves both stock and movement history unchanged.
 
-MIT licensed. No employment, client work or production outcomes are claimed.
+MIT licensed. See LICENSE.
